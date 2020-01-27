@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>フロントエンド勉強会</h1>
+    <div>以下のタブから勉強したいことを選んでください</div>
+    <!-- aタグでもtab遷移できアクセシビリティを担保できるが、遷移するわけでもないのに＃が映るのはベスプラではない -->
+    <!-- <a href="#" onclick="onClick('#tabContent1')" tabindex="0">タブ１</a> -->
+    <button onclick="onClick('#tabContent1')" tabindex="0">タブ１</button>
+    <div>タブ２</div>
+    <div>タブ３</div>
+    <div id="tabContent1" style="display:none">タブ１の中身</div>
+    <div id="tabContent2" style="display:none">タブ２の中身</div>
+    <div id="tabContent3" style="display:none">タブ３の中身</div>
+
+    <style>
+      button {
+        background-color: none;
+        border: 1px solid red;
+        border-radius: 4px;
+
+        /* noneにするとデザイン通りにはなるかもだが(tab遷移の時青くならない)、アクセシビリティ的観点においては× */
+        /* outline: none; */
+      }
+    </style>
+
+    <script>
+      function onClick(id) {
+        //noneをblockにする
+        document.querySelector(id).style.display = "block";
+      }
+    </script>
+  </body>
+</html>
