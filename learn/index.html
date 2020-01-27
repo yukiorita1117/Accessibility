@@ -11,14 +11,26 @@
     <div>以下のタブから勉強したいことを選んでください</div>
     <!-- aタグでもtab遷移できアクセシビリティを担保できるが、遷移するわけでもないのに＃が映るのはベスプラではない -->
     <!-- <a href="#" onclick="onClick('#tabContent1')" tabindex="0">タブ１</a> -->
-    <button onclick="onClick('#tabContent1')" tabindex="0">タブ１</button>
-    <div>タブ２</div>
-    <div>タブ３</div>
-    <div id="tabContent1" style="display:none">タブ１の中身</div>
-    <div id="tabContent2" style="display:none">タブ２の中身</div>
-    <div id="tabContent3" style="display:none">タブ３の中身</div>
+    <div role="tablist">
+      <button id="btn1" role="tab" onclick="onClick('1')" aria-selected="true">
+        タブ１
+      </button>
+      <button id="btn2" role="tab" onclick="onClick('2')" aria-selected="false">
+        タブ２
+      </button>
+      <button id="btn3" role="tab" onclick="onClick('3')" aria-selected="true">
+        タブ３
+      </button>
+    </div>
+
+    <div id="tabContent1" class="tabContent">タブ１の中身</div>
+    <div id="tabContent2" class="tabContent">タブ２の中身</div>
+    <div id="tabContent3" class="tabContent">タブ３の中身</div>
 
     <style>
+      .tabContent {
+        display: none;
+      }
       button {
         background-color: none;
         border: 1px solid red;
@@ -32,7 +44,19 @@
     <script>
       function onClick(id) {
         //noneをblockにする
-        document.querySelector(id).style.display = "block";
+        document.querySelectorAll(".tabContent").forEach(e => {
+          e.style.display = "none";
+        });
+
+        document.querySelectorAll("button[role='tab']").forEach(e => {
+          e.setAttribute("aria-selected", "false");
+        });
+
+        document.querySelector("#tabContent" + id).style.display = "block";
+
+        document
+          .querySelector("#btn" + id)
+          .setAttribute("aria-selected", "true");
       }
     </script>
   </body>
