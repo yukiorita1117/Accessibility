@@ -12,14 +12,23 @@
     <!-- aタグでもtab遷移できアクセシビリティを担保できるが、遷移するわけでもないのに＃が映るのはベスプラではない -->
     <!-- <a href="#" onclick="onClick('#tabContent1')" tabindex="0">タブ１</a> -->
     <div role="tablist">
-      <button id="btn1" role="tab" onclick="onClick('1')" aria-selected="true">
+      <button id="btn1" role="tab" onclick="onClick('1')" aria-selected="false">
         タブ１
       </button>
-      <button id="btn2" role="tab" onclick="onClick('2')" aria-selected="false">
+      <button id="btn2" role="tab" onclick="onClick('2')" aria-selected="true">
         タブ２
       </button>
-      <button id="btn3" role="tab" onclick="onClick('3')" aria-selected="true">
-        タブ３
+      <!-- web iconといったものを使う場合読み上げられないのでlabelで補填 -->
+      <!-- aria-hidden使うと、読み上げたくないものは隠せる -->
+      <button
+        id="btn3"
+        role="tab"
+        onclick="onClick('3')"
+        aria-selected="false"
+        aria-label="ビール"
+        aria-hidden="true"
+      >
+        <i class="icon-hoge"> </i>
       </button>
     </div>
 
