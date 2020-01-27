@@ -11,34 +11,67 @@
     <div>以下のタブから勉強したいことを選んでください</div>
     <!-- aタグでもtab遷移できアクセシビリティを担保できるが、遷移するわけでもないのに＃が映るのはベスプラではない -->
     <!-- <a href="#" onclick="onClick('#tabContent1')" tabindex="0">タブ１</a> -->
-    <div role="tablist">
-      <button id="btn1" role="tab" onclick="onClick('1')" aria-selected="false">
-        タブ１
-      </button>
-      <button id="btn2" role="tab" onclick="onClick('2')" aria-selected="true">
-        タブ２
-      </button>
-      <!-- web iconといったものを使う場合読み上げられないのでlabelで補填 -->
-      <!-- aria-hidden使うと、読み上げたくないものは隠せる -->
-      <button
-        id="btn3"
-        role="tab"
-        onclick="onClick('3')"
-        aria-selected="false"
-        aria-label="ビール"
-        aria-hidden="true"
-      >
-        <i class="icon-hoge"> </i>
-      </button>
+    <ul role="tablist">
+      <li role="presentation">
+        <button
+          id="btn1"
+          role="tab"
+          onclick="onClick('1')"
+          aria-selected="false"
+        >
+          タブ１
+        </button>
+      </li>
+      <li role="presentation">
+        <button
+          id="btn2"
+          role="tab"
+          onclick="onClick('2')"
+          aria-selected="true"
+        >
+          タブ２
+        </button>
+      </li>
+      <li role="presentation">
+        <!-- web iconといったものを使う場合読み上げられないのでlabelで補填 -->
+        <!-- aria-hidden使うと、読み上げたくないものは隠せる -->
+        <button
+          id="btn3"
+          role="tab"
+          onclick="onClick('3')"
+          aria-selected="false"
+          aria-label="ビール"
+          aria-hidden="true"
+        >
+          タブ3
+          <!-- <i class="icon-hoge"> </i> -->
+        </button>
+      </li>
+    </ul>
+
+    <div
+      role="content"
+      id="tabContent1"
+      class="tabContent"
+      aria-selected="false"
+    >
+      タブ１の中身
+    </div>
+    <div role="content" id="tabContent2" class="tabContent" aria-hidden="false">
+      タブ２の中身
+    </div>
+    <div role="content" id="tabContent3" class="tabContent" aria-hidden="false">
+      タブ３の中身
     </div>
 
-    <div id="tabContent1" class="tabContent">タブ１の中身</div>
-    <div id="tabContent2" class="tabContent">タブ２の中身</div>
-    <div id="tabContent3" class="tabContent">タブ３の中身</div>
-
     <style>
-      .tabContent {
+      .tabContent[aria-hidden="false"] {
         display: none;
+      }
+
+      button[aria-selected="true"] {
+        background-color: red;
+        color: snow;
       }
       button {
         background-color: none;
@@ -52,20 +85,23 @@
 
     <script>
       function onClick(id) {
-        //noneをblockにする
-        document.querySelectorAll(".tabContent").forEach(e => {
-          e.style.display = "none";
-        });
-
         document.querySelectorAll("button[role='tab']").forEach(e => {
           e.setAttribute("aria-selected", "false");
         });
 
-        document.querySelector("#tabContent" + id).style.display = "block";
+        // document.querySelector("#tabContent" + id).style.display = "block";
 
         document
           .querySelector("#btn" + id)
           .setAttribute("aria-selected", "true");
+
+        document.querySelectorAll("div[role='content']").forEach(e => {
+          e.setAttribute("aria-hidden", "false");
+        });
+
+        document
+          .querySelector("#tabContent" + id)
+          .setAttribute("aria-hidden", "true");
       }
     </script>
   </body>
